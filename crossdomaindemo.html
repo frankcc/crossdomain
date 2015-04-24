@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>跨域测试</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+ 
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+    
+	<script type="text/javascript">
+		
+		//jsonp 回调处理跨域
+		var dosth=function(data){
+
+			console.log('通过script src 处理跨域')
+			console.log(data)
+		}
+		$(function(){
+			$.getJSON('http://api.map.baidu.com/telematics/v3/weather?location=成都&output=json&ak=qVIRj2jXrFgXCKqm6E4ymaYe&callback=?',function(jsondata){
+					console.log('直接使用 getJSON 处理跨域 不需要额外的script引用')
+					console.log(jsondata)
+			});
+
+
+		})
+		//设置相同的document.domain  
+		// a.html   document.domain ='www.xxx.com'  b.html  document.domain ='www.xxx.com'   
+		// a.html  <iframe  src="b.html"></iframe>
+
+
+		//设置window.name  再通过设置载入目标页面 进行跨域   window.name 页面载入后不会清除   a.html window.name =xxx   loction.href='b.html'  b.html window.name=xxx
+
+
+		//html5 window.postMessage IE6、IE7不支持
+
+		//服务器代理
+	</script>
+	 <script type="text/javascript" src="http://api.map.baidu.com/telematics/v3/weather?location=成都&output=json&ak=qVIRj2jXrFgXCKqm6E4ymaYe&callback=dosth"></script>
+</head>
+<body style="margin:0px;">
+	<iframe id='iframeweather' src="http://api.map.baidu.com/telematics/v3/weather?location=成都&output=json&ak=qVIRj2jXrFgXCKqm6E4ymaYe"></iframe>
+ 	<div id='weatherdata'></div>
+</body>
+</html>
